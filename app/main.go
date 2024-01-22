@@ -27,9 +27,9 @@ func main() {
 	}
 
 	var stockItemRepository = StockItemRepository{db: db}
-	insertErr := stockItemRepository.Store(stockItem)
-	if insertErr != nil {
-		println(insertErr.Error())
+	storeErr := stockItemRepository.Store(stockItem)
+	if storeErr != nil {
+		println(storeErr.Error())
 	}
 
 	defer db.Close()
