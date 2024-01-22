@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS public."StockItem";
+DROP TABLE IF EXISTS public.stock_item;
