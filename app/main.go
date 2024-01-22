@@ -20,6 +20,7 @@ func main() {
 	if dbOpenErr != nil {
 		println(dbOpenErr.Error())
 	}
+	defer db.Close()
 
 	stockItem := models.StockItem{
 		ID:   uuid.New().String(),
@@ -32,7 +33,6 @@ func main() {
 		println(storeErr.Error())
 	}
 
-	defer db.Close()
 }
 
 type StockItemRepository struct {
