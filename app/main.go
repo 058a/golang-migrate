@@ -21,14 +21,29 @@ func main() {
 		println(dbOpenErr.Error())
 	}
 
-	var stockItem models.StockItem
-	stockItem.ID = uuid.New().String()
-	stockItem.Name = "test"
+	stockItem := models.StockItem{
+		ID:   uuid.New().String(),
+		Name: "test2",
+	}
 
-	sqlErr := stockItem.Insert(context.Background(), db, boil.Infer())
-	if sqlErr != nil {
-		println(sqlErr.Error())
+	var stockItemRepository = StockItemRepository{db: db}
+	insertErr := stockItemRepository.Store(stockItem)
+	if insertErr != nil {
+		println(insertErr.Error())
 	}
 
 	defer db.Close()
+}
+
+type StockItemRepository struct {
+	db *sql.DB
+}
+
+func (s StockItemRepository) Store(stockItem models.StockItem) error {
+	err := stockItem.Insert(context.Background(), s.db, boil.Infer())
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
