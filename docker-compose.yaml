@@ -12,3 +12,12 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: openapi
+  
+  migrate:
+    container_name: migrate
+    image: migrate/migrate
+    command: up -path /migrations -database postgresql://user:password@openapi-db:5432/openapi?sslmode=disable
+    volumes:
+      - ./migrations:/migrations
+    depends_on:
+      - openapi-db
